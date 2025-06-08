@@ -134,7 +134,7 @@
 
 📄 [논문(Detecting malicious code variants using
 convolutional neural network (CNN) with
-transfer learning ) 기반 성능 차이](/figure/peerj-cs-2727.pdf)
+transfer learning) 기반 성능 차이](/figure/peerj-cs-2727.pdf)
 
 * Grayscale 대비 **F1-score 기준 약 3\~5% 성능 향상**
 * SVD 기반 컬러 이미지에서는 CNN이 각 채널을 통해 구조 밀도, 경계, 텍스처를 분리 학습 가능
@@ -144,7 +144,7 @@ transfer learning ) 기반 성능 차이](/figure/peerj-cs-2727.pdf)
 ## 3. `auto_width` 기반 동적 이미지 크기 설계
 
 CNN 모델들은 `224x224` 입력을 기본으로 요구하지만,
-일본 PE 파일의 크기는 수십 KB부터 수 MB까지 다양하여 단순 고정 width는 구조 왜곡을 유발합니다.
+일반 PE 파일의 크기는 수십 KB부터 수 MB까지 다양하여 단순 고정 width는 구조 왜곡을 유발합니다.
 
 이를 해결하기 위해, 아래의 \*\*정사각형 보존 중심의 자동 해상도 설계 함수 `auto_width()`\*\*를 적용했습니다.
 
@@ -269,7 +269,7 @@ SVD는 각 PE 파일의 구조적 밀도 정보를 압축하여 시각화한 방
 
 * SVD 이미지는 파일 구조의 밀도 분포를 시각화하지만,
 
-  * 해당 구조가 “왜” 악성인지에 대한 세부적 법렬 정보 부족
+  * 해당 구조가 “왜” 악성인지에 대한 세부적 변별 정보 부족
 * 결과적으로 benign vs malware의 분포가 유사할 경우, VGG16이 이를 충분히 구분하지 못함
 * 이는 **SVD 기반 단일 입력의 한계**를 시사함
 
@@ -384,7 +384,7 @@ Entropy Image → ConvNeXt-Tiny ┘
 | 모델 구성                      | Accuracy | F1 (Benign) | F1 (Malware) |
 | -------------------------- | -------- | ----------- | ------------ |
 | VGG16 + SVD (단일 입력)        | 0.9431   | 0.8711      | 0.9635       |
-| ConvNeXt-Tiny + DualBranch | 0.9704   | 0.9693      | 0.9713       |
+| ConvNeXt-Tiny + DualBranch | 0.9707   | 0.9680      | 0.9730       |
 
 * ✅ 단일 입력 모델 대비 모든 항목에서 성능이 상승
 * 특히 benign class의 F1-score 향상이 뚜렷 → 오탐률 감소에 기여
@@ -439,10 +439,35 @@ SVD와 Entropy 이미지는 각기 다른 시각적 특성을 가지며,
 Dual-Branch 구조는 입력 이미지로 **SVD와 Entropy** 두 가지를 사용합니다.
 두 이미지가 지닌 특성이 다르기 때문에 동일한 증강을 일괄 적용하는 것은 **비효율적**이라고 판단하였습니다.
 
+
 | Branch  | 증강 전략 설명                                   |
 | ------- | ------------------------------------------ |
-| SVD     | 구조 보존 중심의 증강 (Color Jitter, Center Crop 등) |
-| Entropy | 텍스처 강화 중심 증강 (Noise, Blur, Sharpen 등)      |
+| SVD     | 구조 보존 중심의 증강 (Color Jitter, Affine 등) |
+| Entropy | 텍스처 강화 중심 증강 (Noise, CLAHE, Sharpen 등)    |
+
+
+### 🧱 SVD Branch – 구조 보존 중심 증강
+
+| 증강 기법            | 설명 |
+|---------------------|------|
+| `A.Affine`          | 이미지의 위치·크기만 약간 변경하여 구조 유지하며 변형 허용 |
+| `A.HueSaturationValue` | 색상·채도에 경미한 변화 적용 → 채널 간 구조 왜곡 없이 다양성 부여 |
+| `A.Rotate(limit=8)` | 소각도 회전 → 시야 방향 변화 대응 |
+| `A.CoarseDropout`   | 이미지의 일부분 제거하여 특정 영역 의존 완화 |
+| `A.RandomBrightnessContrast` | 명암 대비 조절 → 과적합 완화 및 일반화 유도 |
+
+### 🔬 Entropy Branch – 텍스처 강화 중심 증강
+
+| 증강 기법         | 설명 |
+|------------------|------|
+| `A.CLAHE`        | 로컬 대비 증가 → 정보량 차이 더 뚜렷하게 표현 |
+| `A.Sharpen`      | 경계(edge) 강조 → 고주파 텍스처 인식 강화 |
+| `A.GaussNoise`   | 무작위 노이즈 삽입 → 현실 노이즈 상황 시뮬레이션 |
+| `A.GridDropout`  | 이미지 일부 제거 → 일부 정보 결손 상황에 대한 강인성 확보 |
+| `A.Rotate(limit=12)` | 중간 강도의 회전 → 패턴 방향 다양화 |
+| `A.RandomBrightnessContrast` | 밝기/대비 변화로 경계 대비 조정 |
+
+
 
 ### ✅ 적용 결과
 
@@ -479,7 +504,8 @@ Dual-Branch 구조에서도 유효한지 판단하기 위함.
 | D2   | 0.2   | 0.02 | 0.5     | 0.9728       |
 | D3   | 0.0   | 0.02 | 0.5     | **0.9744** ✅ |
 
-✅ **D3 조합이 가장 우수하여 이후 실험의 기준 설정**
+✅ **D3 조합과 baseline은 동일한 실험 결과를 보였으나, `label smoothing` 값을 0.05 → 0.02로 감소시킨 D3 설정이 동일한 일반화 성능을 유지하였기 때문에,  
+0.02가 정보 희석의 위험이 더 낮고, 향후 추가 학습이나 미세 조정(fine-tuning) 시 더 안정적인 기반이 될 수 있다고 판단하여 D3를 선택하였다**
 
 ---
 
