@@ -199,7 +199,7 @@ def auto_width(length):
 > 본 이미지 전처리 설계는 논문 기반 분석, 구조적 실험, 성능 향상 검증 결과를 통해 완성되었으며,
 > 이후 CNN 구조 설계로 연결됩니다.
 
-# 🔬 Part 3: CNN 단일 입력 실험 (SVD Only)
+# Part 3: CNN 단일 입력 실험 (SVD Only)
 
 ## 📖 실험 배경
 
@@ -399,7 +399,7 @@ Entropy Image → ConvNeXt-Tiny ┘
   더 넓은 표현 공간을 확보하게 되었고,**
 * 기본적인 실험만으로도 기존 CNN 단일 입력 구조를 능가하는 성능을 보였습니다.
 
-# 🔬 Part 5: Dual-Branch 모델 성능 개선을 위한 Ablation Study
+# Part 5: Dual-Branch 모델 성능 개선을 위한 Ablation Study
 
 ## 📌 개요
 
@@ -428,7 +428,7 @@ Part 5는 아래와 같은 실험 흐름을 따릅니다:
 
 ---
 
-## 🧪 5.1 Branch별 증강 전략 실험
+## 5.1 Branch별 증강 전략 실험
 
 ## 🎯 실험 목적
 
@@ -454,7 +454,7 @@ Dual-Branch 구조는 입력 이미지로 **SVD와 Entropy** 두 가지를 사�
 
 ---
 
-## 🧪 5.2 일반 학습 Trick 실험: MixUp, Label Smoothing, Dropout
+## 5.2 일반 학습 Trick 실험: MixUp, Label Smoothing, Dropout
 
 ## 🎯 실험 목적
 
@@ -483,7 +483,7 @@ Dual-Branch 구조에서도 유효한지 판단하기 위함.
 
 ---
 
-## 🧪 5.3 Backbone Dropout & EMA 적용 실험
+## 5.3 Backbone Dropout & EMA 적용 실험
 
 ## 🎯 실험 목적
 
@@ -539,7 +539,7 @@ CNN의 과적합 억제를 위해 **Backbone 자체에도 dropout**을 도입하
 
 ---
 
-## 🧪 5.4 Adaptive 2-Step Unfreeze & SWA 적용 실험
+## 5.4 Adaptive 2-Step Unfreeze & SWA 적용 실험
 
 ## 🎯 실험 목적
 
@@ -608,7 +608,7 @@ Stem → Stage1 (3 blocks) → Stage2 (3 blocks) → Stage3 (9 blocks) → Stage
 
 ---
 
-## 🦪 5.5 Adaptive SVD 압축 Rank 조정 실험 및 Attention 주입 실험
+## 5.5 Adaptive SVD 압축 Rank 조정 실험 및 Attention 주입 실험
 
 ## 🌟 배경 및 개선 필요성
 
@@ -763,7 +763,7 @@ CBAM은 복잡도 증가에도 불구하고 성능이 하락하여 제외함.
 
 ---
 
-## 🧪 5.6 Scheduler 및 Optimizer 튜닝 실험
+## 5.6 Scheduler 및 Optimizer 튜닝 실험
 
 ## 🎯 실험 배경
 
@@ -843,7 +843,7 @@ SEBlock 기반 DualBranch 모델에서 정확도 97.54%를 달성했지만,
 
 ---
 
-## 🔬 5.7 Meta Feature + Stacking Ensemble 실험
+## 5.7 Meta Feature + Stacking Ensemble 실험
 
 모델의 표현력을 더욱 확장하기 위해, 정적 PE 기반 feature(meta feature)를 활용한 서브넷 구성 및
 Dual-Branch CNN과 LightGBM을 결합한 stacking ensemble 기법도 시도하였다.
@@ -860,7 +860,7 @@ Dual-Branch CNN과 LightGBM을 결합한 stacking ensemble 기법도 시도하�
 
 ---
 
-## 🎯 6. 최종 모델 선정 및 성능 요약
+## 6. 최종 모델 선정 및 성능 요약
 
 ### 🔖 선정된 최종 탐지기 구성
 
@@ -889,7 +889,7 @@ Dual-Branch CNN과 LightGBM을 결합한 stacking ensemble 기법도 시도하�
 
 ---
 
-## 🧾 최종 요약 및 향후 방향
+## Part 6: 최종 모델 선정 및 성능 요약
 
 본 프로젝트는 악성코드 탐지를 위해 정적/동적 분석 정보를 각각 시각화(SVD, Entropy)하여 CNN 기반 이진 분류 모델을 구축하고,  
 다양한 attention 기법(SEBlock, CBAM)과 feature fusion 전략(CrossAttention 등)을 실험하여 최적 구조를 도출하였습니다.  
