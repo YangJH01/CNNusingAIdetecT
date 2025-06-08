@@ -132,7 +132,9 @@
 4. R/G/B 채널에 각각 주요 성분 할당
 5. `Jet` 컬러맵을 적용해 시각적 분포를 극대화한 컬러 이미지 생성
 
-📄 [논문 기반 성능 차이](/figure/peerj-cs-2727.pdf)
+📄 [논문(Detecting malicious code variants using
+convolutional neural network (CNN) with
+transfer learning ) 기반 성능 차이](/figure/peerj-cs-2727.pdf)
 
 * Grayscale 대비 **F1-score 기준 약 3\~5% 성능 향상**
 * SVD 기반 컬러 이미지에서는 CNN이 각 채널을 통해 구조 밀도, 경계, 텍스처를 분리 학습 가능
