@@ -860,7 +860,7 @@ Dual-Branch CNN과 LightGBM을 결합한 stacking ensemble 기법도 시도하�
 
 ---
 
-## 6. 최종 모델 선정 및 성능 요약
+## Part: 6. 최종 모델 선정 및 성능 요약
 
 ### 🔖 선정된 최종 탐지기 구성
 
@@ -889,7 +889,7 @@ Dual-Branch CNN과 LightGBM을 결합한 stacking ensemble 기법도 시도하�
 
 ---
 
-## Part 6: 최종 모델 선정 및 성능 요약
+## 🧾 최종 요약 및 향후 방향
 
 본 프로젝트는 악성코드 탐지를 위해 정적/동적 분석 정보를 각각 시각화(SVD, Entropy)하여 CNN 기반 이진 분류 모델을 구축하고,  
 다양한 attention 기법(SEBlock, CBAM)과 feature fusion 전략(CrossAttention 등)을 실험하여 최적 구조를 도출하였습니다.  
