@@ -439,10 +439,35 @@ SVD와 Entropy 이미지는 각기 다른 시각적 특성을 가지며,
 Dual-Branch 구조는 입력 이미지로 **SVD와 Entropy** 두 가지를 사용합니다.
 두 이미지가 지닌 특성이 다르기 때문에 동일한 증강을 일괄 적용하는 것은 **비효율적**이라고 판단하였습니다.
 
+
 | Branch  | 증강 전략 설명                                   |
 | ------- | ------------------------------------------ |
-| SVD     | 구조 보존 중심의 증강 (Color Jitter, Center Crop 등) |
-| Entropy | 텍스처 강화 중심 증강 (Noise, Blur, Sharpen 등)      |
+| SVD     | 구조 보존 중심의 증강 (Color Jitter, Affine 등) |
+| Entropy | 텍스처 강화 중심 증강 (Noise, CLAHE, Sharpen 등)    |
+
+
+### 🧱 SVD Branch – 구조 보존 중심 증강
+
+| 증강 기법            | 설명 |
+|---------------------|------|
+| `A.Affine`          | 이미지의 위치·크기만 약간 변경하여 구조 유지하며 변형 허용 |
+| `A.HueSaturationValue` | 색상·채도에 경미한 변화 적용 → 채널 간 구조 왜곡 없이 다양성 부여 |
+| `A.Rotate(limit=8)` | 소각도 회전 → 시야 방향 변화 대응 |
+| `A.CoarseDropout`   | 이미지의 일부분 제거하여 특정 영역 의존 완화 |
+| `A.RandomBrightnessContrast` | 명암 대비 조절 → 과적합 완화 및 일반화 유도 |
+
+### 🔬 Entropy Branch – 텍스처 강화 중심 증강
+
+| 증강 기법         | 설명 |
+|------------------|------|
+| `A.CLAHE`        | 로컬 대비 증가 → 정보량 차이 더 뚜렷하게 표현 |
+| `A.Sharpen`      | 경계(edge) 강조 → 고주파 텍스처 인식 강화 |
+| `A.GaussNoise`   | 무작위 노이즈 삽입 → 현실 노이즈 상황 시뮬레이션 |
+| `A.GridDropout`  | 이미지 일부 제거 → 일부 정보 결손 상황에 대한 강인성 확보 |
+| `A.Rotate(limit=12)` | 중간 강도의 회전 → 패턴 방향 다양화 |
+| `A.RandomBrightnessContrast` | 밝기/대비 변화로 경계 대비 조정 |
+
+
 
 ### ✅ 적용 결과
 
