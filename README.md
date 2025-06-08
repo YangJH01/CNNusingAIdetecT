@@ -204,7 +204,9 @@ def auto_width(length):
 ## 📖 실험 배경
 
 초기 이미지 기반 접근은 **SVD 이미지 단일 입력만을 사용하는 구조**로 시작되었습니다.
-참고한 논문 \[PeerJ CS, 2023]에서는 SVD 기반 CNN 모델이 기존 grayscale 기반 접근보다 우수한 성능을 보였기 때문에, 유사하게 **VGG16 Pretrained Backbone**을 사용한 구조로 baseline을 구축하였습니다.
+참고한 논문 \[Detecting malicious code variants using
+convolutional neural network (CNN) with
+transfer learning]에서는 SVD 기반 CNN 모델이 기존 grayscale 기반 접근보다 우수한 성능을 보였기 때문에, 유사하게 **VGG16 Pretrained Backbone**을 사용한 구조로 baseline을 구축하였습니다.
 
 ---
 
