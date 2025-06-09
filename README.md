@@ -8,14 +8,13 @@
 - [Part 4. Dual-Branch CNN 구조로의 확장](#part-4-dual-branch-cnn-구조로의-확장)
 - [Part 5. Dual-Branch 모델 성능 개선을 위한 Ablation Study](#part-5-dual-branch-모델-성능-개선을-위한-ablation-study)
   - [5.1 Branch별 증강 전략 실험](#51-branch별-증강-전략-실험)
-  - [5.2 일반 학습 Trick 실험](#52-일반-학습-trick-실험)
-  - [5.3 Dropout & EMA 적용 실험](#53-dropout--ema-적용-실험)
-  - [5.4 Adaptive Unfreeze + SWA 실험](#54-adaptive-unfreeze--swa-실험)
-  - [5.5 Adaptive Rank 조정 및 Attention 실험](#55-adaptive-rank-조정-및-attention-실험)
+  - [5.2 일반 학습 Trick 실험 (MixUp, Label Smoothing, Dropout)](#52-일반-학습-trick-실험-mixup-label-smoothing-dropout)
+  - [5.3 Backbone Dropout & EMA 적용 실험](#53-backbone-dropout--ema-적용-실험)
+  - [5.4 Adaptive 2-Step Unfreeze & SWA 적용 실험](#54-adaptive-2-step-unfreeze--swa-적용-실험)
+  - [5.5 Adaptive SVD 압축 Rank 조정 실험 및 Attention 주입 실험](#55-adaptive-svd-압축-rank-조정-실험-및-attention-주입-실험)
   - [5.6 Scheduler 및 Optimizer 튜닝 실험](#56-scheduler-및-optimizer-튜닝-실험)
   - [5.7 Meta Feature + Stacking Ensemble 실험](#57-meta-feature--stacking-ensemble-실험)
 - [Part 6. 최종 모델 선정 및 성능 요약](#part-6-최종-모델-선정-및-성능-요약)
-
 
 
 
